@@ -560,7 +560,10 @@ class Privet(LogoCert):
       raise
     else:
       try:
-        self.assertEqual(response['code'], return_code)
+        if Constants.CAPS['LOCAL_PRINT']:
+          self.assertEqual(response['code'], return_code)
+        else:
+          self.assertNotEqual(response['code'], return_code)
       except AssertionError:
         notes = 'Incorrect return code, found %d' % response['code']
         self.LogTest(test_id, test_name, 'Failed', notes)
